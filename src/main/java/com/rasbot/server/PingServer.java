@@ -18,7 +18,7 @@ public class PingServer implements PingTimeCallback {
 
     public static final int PORT = 4334;
 
-    private static final int CONNECTION_TRESHOLD = 150;
+    private static final int CONNECTION_TRESHOLD = 750;
 
     private ServerSocket serverSocket;
 

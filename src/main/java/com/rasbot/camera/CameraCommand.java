@@ -26,6 +26,11 @@ public class CameraCommand {
 
     private long bitRate;
 
+    /**
+     * Set brightness on 60 gives the best result
+     */
+    private int brightness = 60;
+
     public int getFps() {
         return fps;
     }
@@ -106,8 +111,16 @@ public class CameraCommand {
         this.bitRate = bitRate;
     }
 
+    public int getBrightness() {
+        return brightness;
+    }
+
+    private void setBrightness(int brightness) {
+        this.brightness = brightness;
+    }
+
     public String get(){
-        StringBuilder commandBuilder = new StringBuilder();
+        StringBuilder commandBuilder =  new StringBuilder();
 
         commandBuilder.append("nohup raspivid ");
 
@@ -130,6 +143,9 @@ public class CameraCommand {
 
         commandBuilder.append("-b ").append(bitRate).append(" ");
 
+
+        commandBuilder.append("-br ").append(brightness).append(" ");
+
         commandBuilder.append("-n -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink ");
 
         commandBuilder.append("host=").append(host).append(" ");
@@ -142,6 +158,7 @@ public class CameraCommand {
     private CameraCommand(){}
 
     public static class CameraCommandBuilder{
+
 //Command to run camera with proper values
 //"nohup raspivid -rot 180 -t 0 -h 360 -w 640 -fps 25 -hf -vf -b 2000000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host 192.168.2.1 port 8554"
 
@@ -150,7 +167,7 @@ public class CameraCommand {
 
         public CameraCommandBuilder() {
             this.cameraCommand = new CameraCommand();
-            setFps(25);
+            setFps(50);
             setVerticalFlip(true);
             setHorizontalFlip(true);
             setVideoLength(0);
@@ -158,6 +175,7 @@ public class CameraCommand {
             setRotation(180);
             setHeighRes(360);
             setWidthRes(640);
+            setBrightness(60);
             setHost("192.168.2.1");
             setPort(8554);
         }
@@ -209,6 +227,11 @@ public class CameraCommand {
 
         public CameraCommandBuilder setPort(int port){
             cameraCommand.setPort(port);
+            return this;
+        }
+
+        public CameraCommandBuilder setBrightness(int brightness){
+            cameraCommand.setBrightness(brightness);
             return this;
         }
 

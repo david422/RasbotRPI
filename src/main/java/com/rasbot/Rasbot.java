@@ -24,18 +24,25 @@ public class Rasbot {
 
     public static void main(String[] args) {
         logger.info("Params: " + String.valueOf(args.length));
+
         new Rasbot(args);
     }
 
     public Rasbot(String[] params) {
 
-        gpioManager = new GPIOManager();
 
-        cameraManager = new CameraManager();
-        cameraManager.start();
+        if (params.length==0 /*&& !params[0].equals("local")*/) {
+            gpioManager = new GPIOManager();
+
+            cameraManager = new CameraManager();
+            cameraManager.start();
+        }
 
         ConnectionManager connectionManager = new ConnectionManager();
-        connectionManager.setMessageCallback(gpioManager.getMessageCallback());
+
+        if (gpioManager != null){
+            connectionManager.setMessageCallback(gpioManager.getMessageCallback());
+        }
         connectionManager.init();
 
     }
