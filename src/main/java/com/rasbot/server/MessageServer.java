@@ -73,6 +73,7 @@ public class MessageServer {
     }
 
     public void sendMessage(Message message) {
+        logger.info("send: " + message.getJsonMessage());
         printWriter.println(message.getJsonMessage());
         printWriter.flush();
     }
@@ -99,7 +100,7 @@ public class MessageServer {
                 while ((userInput = stdIn.readLine()) != null) {
                     logger.info(userInput);
                     Message m = gson.fromJson(userInput, Message.class);
-                    if (callback != null){
+                    if (callback != null && m != null){
                         callback.onGetMessage(m);
                     }
                 }

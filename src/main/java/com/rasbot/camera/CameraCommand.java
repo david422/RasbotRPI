@@ -159,7 +159,7 @@ public class CameraCommand {
 
     private CameraCommand(){}
 
-    public static class CameraCommandBuilder{
+    public static class Builder {
 
 //Command to run camera with proper values
 //"nohup raspivid -rot 180 -t 0 -h 360 -w 640 -fps 25 -hf -vf -b 2000000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host 192.168.2.1 port 8554"
@@ -169,7 +169,7 @@ public class CameraCommand {
 
         private CameraCommand cameraCommand;
 
-        public CameraCommandBuilder() {
+        public Builder() {
             this.cameraCommand = new CameraCommand();
             setFps(50);
             setVerticalFlip(true);
@@ -184,59 +184,57 @@ public class CameraCommand {
             setPort(8554);
         }
 
-        public CameraCommandBuilder setFps(int fps){
+        public Builder setFps(int fps){
             cameraCommand.setFps(fps);
             return this;
         };
 
-        public CameraCommandBuilder setRotation(int rot){
+        public Builder setRotation(int rot){
             cameraCommand.setRot(rot);
             return this;
         }
 
-        public CameraCommandBuilder setHeighRes(int height){
+        public Builder setHeighRes(int height){
             cameraCommand.setHeightRes(height);
             return this;
         }
 
-        public CameraCommandBuilder setWidthRes(int width){
+        public Builder setWidthRes(int width){
             cameraCommand.setWidthRes(width);
             return this;
         }
 
-        public CameraCommandBuilder setBitrate(long bitrate){
+        public Builder setBitrate(long bitrate){
             cameraCommand.setBitRate(bitrate);
             return this;
         }
 
-        public CameraCommandBuilder setVideoLength(long videoLength){
+        public Builder setVideoLength(long videoLength){
             cameraCommand.setVideoLength(videoLength);
             return this;
         }
 
-        public CameraCommandBuilder setHorizontalFlip(boolean horizontalFlip){
-            logger.info("horizontalFlip: " + horizontalFlip);
+        public Builder setHorizontalFlip(boolean horizontalFlip){
             cameraCommand.setHorizontalFlip(horizontalFlip);
             return this;
         }
 
-        public CameraCommandBuilder setVerticalFlip(boolean verticalFlip){
-            logger.info("verticalFlip: " + verticalFlip);
+        public Builder setVerticalFlip(boolean verticalFlip){
             cameraCommand.setVerticalFlip(verticalFlip);
             return this;
         }
 
-        public CameraCommandBuilder setHost(String host){
+        public Builder setHost(String host){
             cameraCommand.setHost(host);
             return this;
         }
 
-        public CameraCommandBuilder setPort(int port){
+        public Builder setPort(int port){
             cameraCommand.setPort(port);
             return this;
         }
 
-        public CameraCommandBuilder setBrightness(int brightness){
+        public Builder setBrightness(int brightness){
             cameraCommand.setBrightness(brightness);
             return this;
         }

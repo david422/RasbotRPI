@@ -10,6 +10,7 @@ public class Message {
 
     public static final String CONTROL = "control";
     public static final String CAMERA = "camera";
+    public static final String SETTINGS = "settings";
 
     @SerializedName("type")
     private String messageType;
@@ -18,7 +19,8 @@ public class Message {
     private Object messagePaylod;
 
 
-    public Message(String messagePaylod) {
+
+    public Message(Object messagePaylod) {
         this.messagePaylod = messagePaylod;
     }
 
@@ -47,5 +49,9 @@ public class Message {
     @Override
     public String toString() {
         return String.format("type %s, object: %s", messageType, messagePaylod);
+    }
+
+    public String getMessageType() {
+        return messageType;
     }
 }
