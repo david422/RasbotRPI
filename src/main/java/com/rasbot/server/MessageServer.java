@@ -7,7 +7,7 @@ package com.rasbot.server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rasbot.model.Control;
+import com.rasbot.model.Message;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -72,8 +72,8 @@ public class MessageServer {
         this.messageCallback = messageCallback;
     }
 
-    public void sendMessage(String message) {
-        printWriter.println(message);
+    public void sendMessage(Message message) {
+        printWriter.println(message.getJsonMessage());
         printWriter.flush();
     }
 
@@ -97,10 +97,10 @@ public class MessageServer {
                 String userInput;
                 Gson gson = new GsonBuilder().create();
                 while ((userInput = stdIn.readLine()) != null) {
+                    logger.info(userInput);
+                    Message m = gson.fromJson(userInput, Message.class);
                     if (callback != null){
-                        logger.info(userInput);
-                        Control control = gson.fromJson(userInput, Control.class);
-                        callback.onGetMessage(control);
+                        callback.onGetMessage(m);
                     }
                 }
 

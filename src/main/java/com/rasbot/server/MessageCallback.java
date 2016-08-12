@@ -1,8 +1,8 @@
 package com.rasbot.server;
 
-import com.rasbot.model.Control;
+import com.rasbot.model.Message;
 
 public interface MessageCallback {
 
-        public void onGetMessage(Control controlMessage);
+        public void onGetMessage(Message controlMessage);
 }

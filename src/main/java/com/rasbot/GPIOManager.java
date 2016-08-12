@@ -1,5 +1,6 @@
 package com.rasbot;
 
+import com.google.gson.Gson;
 import com.pi4j.io.gpio.*;
 import com.pi4j.wiringpi.SoftPwm;
 import com.rasbot.model.Control;
@@ -13,6 +14,8 @@ import java.util.logging.Logger;
 public class GPIOManager {
 
     private static Logger logger = Logger.getLogger("RasBot");
+
+    private Gson gson = new Gson();
 
     private enum Direction{
         LEFT,RIGHT,NONE
@@ -103,10 +106,12 @@ public class GPIOManager {
 
     private MessageCallback onGetMessage = message -> {
 
-        logger.info(message.toString());
-            setLeftPwm(message);
+        if (message.getControl(gson) != null){
+            logger.info(message.toString());
+            setLeftPwm(message.getControl(gson));
 
-            setRightPwm(message);
+            setRightPwm(message.getControl(gson));
+        }
     };
 
     public MessageCallback getMessageCallback(){

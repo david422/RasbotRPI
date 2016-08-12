@@ -30,4 +30,8 @@ public class Control {
     public String toString() {
         return String.format("Control message - LeftPWM: %d, RightPWM: %d", leftPwm, rightPwm);
     }
+
+    public static String buildZeroControl() {
+        return String.format("{\"left_pwm\":0,\"right_pwm\":0}");
+    }
 }

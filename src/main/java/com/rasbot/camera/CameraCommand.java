@@ -1,5 +1,7 @@
 package com.rasbot.camera;
 
+import java.util.logging.Logger;
+
 /**
  * Created by dawidpodolak on 06.08.2016.
  */
@@ -163,6 +165,8 @@ public class CameraCommand {
 //"nohup raspivid -rot 180 -t 0 -h 360 -w 640 -fps 25 -hf -vf -b 2000000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host 192.168.2.1 port 8554"
 
 
+        Logger logger = Logger.getLogger("CameraCommand");
+
         private CameraCommand cameraCommand;
 
         public CameraCommandBuilder() {
@@ -211,11 +215,13 @@ public class CameraCommand {
         }
 
         public CameraCommandBuilder setHorizontalFlip(boolean horizontalFlip){
+            logger.info("horizontalFlip: " + horizontalFlip);
             cameraCommand.setHorizontalFlip(horizontalFlip);
             return this;
         }
 
         public CameraCommandBuilder setVerticalFlip(boolean verticalFlip){
+            logger.info("verticalFlip: " + verticalFlip);
             cameraCommand.setVerticalFlip(verticalFlip);
             return this;
         }

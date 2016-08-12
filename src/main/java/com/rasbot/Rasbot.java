@@ -1,7 +1,11 @@
 package com.rasbot;
 
+import com.google.gson.Gson;
 import com.rasbot.camera.CameraManager;
+import com.rasbot.model.CameraSettings;
+import com.rasbot.model.Message;
 import com.rasbot.server.ConnectionManager;
+import com.rasbot.server.MessageCallback;
 import com.rasbot.server.MessageServer;
 
 import java.util.logging.Logger;
@@ -31,21 +35,38 @@ public class Rasbot {
     public Rasbot(String[] params) {
 
 
-        if (params.length==0 /*&& !params[0].equals("local")*/) {
-            gpioManager = new GPIOManager();
-
-            cameraManager = new CameraManager();
-            cameraManager.start();
-        }
 
         ConnectionManager connectionManager = new ConnectionManager();
 
+        if (params.length==0 /*&& !params[0].equals("local")*/){
+                gpioManager = new GPIOManager();
+
+            cameraManager = new CameraManager(connectionManager);
+            connectionManager.addMessageCallback(cameraManager.getMessageCallback());
+            cameraManager.start();
+        }
+
+        connectionManager.addMessageCallback(new MessageCallback() {
+            @Override
+            public void onGetMessage(Message message) {
+                CameraSettings cameraSettings = message.getCameraSettings(new Gson());
+                if (cameraSettings != null){
+                    logger.info(cameraSettings.toString());
+                }
+            }
+        });
+
+
         if (gpioManager != null){
-            connectionManager.setMessageCallback(gpioManager.getMessageCallback());
+            connectionManager.addMessageCallback(gpioManager.getMessageCallback());
+        }else{
+
         }
         connectionManager.init();
 
     }
+
+
 
 
 }
