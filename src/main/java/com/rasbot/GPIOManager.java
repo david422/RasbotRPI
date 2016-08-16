@@ -62,8 +62,7 @@ public class GPIOManager {
         rightDirPinB.setState(PinState.LOW);
     }
 
-    private void setLeftPwm(Control control){
-        int leftPwm = control.getLeftPwm();
+    private void setLeftPwm(int leftPwm){
 
         if (leftDirection!=Direction.LEFT && leftPwm >5 ){
             leftDirPinA.low();
@@ -84,8 +83,9 @@ public class GPIOManager {
         logger.info(String.valueOf(leftPwm));
     }
 
-    private void setRightPwm(Control control){
-        int rightPwm = control.getRightPwm();
+    private void setRightPwm(int rightPwm){
+
+        logger.info("right: " + rightPwm);
         if (rightDirection!=Direction.LEFT && rightPwm >5 ){
             rightDirPinA.high();
             rightDirPinB.low();
@@ -106,11 +106,21 @@ public class GPIOManager {
 
     private MessageCallback onGetMessage = message -> {
 
-        if (message.getControl(gson) != null){
-            logger.info(message.toString());
-            setLeftPwm(message.getControl(gson));
+        Control control = message.getControl(gson);
 
-            setRightPwm(message.getControl(gson));
+        if (control != null){
+            logger.info(message.toString());
+
+            int left = control.getLeftPwm();
+            int right = control.getRightPwm();
+            if (left != 0 && right == 0){
+                setLeftPwm(left);
+            }else if (right != 0 && left == 0){
+                setRightPwm(right);
+            }else if (left == 0 && right == 0){
+                setLeftPwm(left);
+                setRightPwm(right);
+            }
         }
     };
 
