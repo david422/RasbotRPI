@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Control {
 
-    @SerializedName("left_rpm")
+    @SerializedName("left_pwm")
     private int leftPwm;
 
-    @SerializedName("right_rpm")
+    @SerializedName("right_pwm")
     private int rightPwm;
 
     public Control(int leftPwm, int rightPwm) {
