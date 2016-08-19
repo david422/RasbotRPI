@@ -84,6 +84,7 @@ public class PingServer implements PingTimeCallback {
                         prevConnectionState = connectionEstablished;
                     }else if (!connectionEstablished && connectionEstablished != prevConnectionState){
                         connectionCallback.onConnectionInterrupted();
+                        logger.info("ping time: " +  (prevPingTime - pingTime));
                         prevConnectionState = connectionEstablished;
                     }
                 }
@@ -130,7 +131,6 @@ public class PingServer implements PingTimeCallback {
                 String pingMessage;
 
                 while ((pingMessage = pingBR.readLine()) != null){
-
                     pingTimeCallback.onPing(System.currentTimeMillis());
 
                     pingPW.write(pingMessage + "\n");

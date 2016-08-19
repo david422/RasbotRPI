@@ -10,7 +10,7 @@ public class Message {
 
     public static final String CONTROL = "control";
     public static final String CAMERA = "camera";
-    public static final String SETTINGS = "settings";
+    public static final String READ_SETTINGS = "settings";
 
     @SerializedName("type")
     private String messageType;
@@ -53,5 +53,9 @@ public class Message {
 
     public String getMessageType() {
         return messageType;
+    }
+
+    public void setType(String type) {
+        this.messageType = type;
     }
 }

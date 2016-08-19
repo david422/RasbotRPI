@@ -48,12 +48,13 @@ public class MessageServer {
     public void start() {
         while (true) {
             try {
+                logger.info("connect: attempt to connect");
                 socket = serverSocket.accept();
+                logger.info("connect: is connect");
 
                 printWriter = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())),
                         true);
-
 
                 System.out.println("The following client has connected:" + socket.getInetAddress().getCanonicalHostName());
                 socketClientHandler = new SocketClientHandler(socket);
@@ -98,7 +99,7 @@ public class MessageServer {
                 String userInput;
                 Gson gson = new GsonBuilder().create();
                 while ((userInput = stdIn.readLine()) != null) {
-                    logger.info(userInput);
+                    logger.info("received: " + userInput);
                     Message m = gson.fromJson(userInput, Message.class);
                     if (callback != null && m != null){
                         callback.onGetMessage(m);

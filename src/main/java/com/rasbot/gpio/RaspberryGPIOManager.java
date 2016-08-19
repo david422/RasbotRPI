@@ -1,4 +1,4 @@
-package com.rasbot;
+package com.rasbot.gpio;
 
 import com.google.gson.Gson;
 import com.pi4j.io.gpio.*;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 /**
  * Created by dawidpodolak on 05.08.2016.
  */
-public class GPIOManager {
+public class RaspberryGPIOManager implements GPIOManager {
 
     private static Logger logger = Logger.getLogger("RasBot");
 
@@ -42,7 +42,7 @@ public class GPIOManager {
     private GpioPinDigitalOutput rightDirPinB;
 
 
-    public GPIOManager() {
+    public RaspberryGPIOManager() {
         com.pi4j.wiringpi.Gpio.wiringPiSetup();
 
         SoftPwm.softPwmCreate(LEFT_PWM_PIN, 0, 100);

@@ -47,6 +47,7 @@ public class ConnectionManager implements ConnectionCallback, MessageCallback {
 
     @Override
     public void onConnectionInterrupted() {
+        logger.info("Connection interrupted");
         onGetMessage(new Message(Control.buildZeroControl()));
 
     }
