@@ -51,13 +51,16 @@ public class PingServer implements PingTimeCallback {
             while (true){
 
                 try {
+                    logger.info("PingManager:start - before");
                     socket = serverSocket.accept();
+                    logger.info("PingManager:start - after");
 
                     Thread pingThread = new Thread(new PingSocketHandler(this, socket));
                     pingThread.start();
 
                     startTimer();
 
+                    logger.info("PingManager:start - done");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

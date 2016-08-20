@@ -26,13 +26,13 @@ public class ConnectionManager implements ConnectionCallback, MessageCallback {
     }
 
     public void init() {
-        pingServer = new PingServer();
-        pingServer.setConnectionCallback(this);
-        pingServer.start();
+            pingServer = new PingServer();
+            pingServer.setConnectionCallback(this);
+            pingServer.start();
 
-        messageServer = new MessageServer();
-        messageServer.setMessageCallback(this);
-        messageServer.start();
+            messageServer = new MessageServer();
+            messageServer.setMessageCallback(this);
+            messageServer.start();
     }
 
     @Override
@@ -48,12 +48,15 @@ public class ConnectionManager implements ConnectionCallback, MessageCallback {
     @Override
     public void onConnectionInterrupted() {
         logger.info("Connection interrupted");
-        onGetMessage(new Message(Control.buildZeroControl()));
+        Message m = new Message(Control.buildZeroControl());
+        m.setType(Message.CONTROL);
+        onGetMessage(m);
 
     }
 
     @Override
     public void onGetMessage(Message controlMessage) {
+        logger.info("onGetMessage: " + controlMessage);
         for (MessageCallback ms : messageCallbacks) {
             ms.onGetMessage(controlMessage);
         }

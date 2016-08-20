@@ -106,6 +106,7 @@ public class RaspberryGPIOManager implements GPIOManager {
 
     private MessageCallback onGetMessage = message -> {
 
+        logger.info("GPIOMAnage:onGetmessage: " + message);
         Control control = message.getControl(gson);
 
         if (control != null){

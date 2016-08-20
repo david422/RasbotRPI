@@ -46,26 +46,29 @@ public class MessageServer {
     }
 
     public void start() {
-        while (true) {
-            try {
-                logger.info("connect: attempt to connect");
-                socket = serverSocket.accept();
-                logger.info("connect: is connect");
+        new Thread(() -> {
+            while (true)
+            {
+                try {
+                    logger.info("MessageServer:start - before");
+                    socket = serverSocket.accept();
+                    logger.info("MessageServer:start - after");
 
-                printWriter = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(socket.getOutputStream())),
-                        true);
+                    printWriter = new PrintWriter(new BufferedWriter(
+                            new OutputStreamWriter(socket.getOutputStream())),
+                            true);
 
-                System.out.println("The following client has connected:" + socket.getInetAddress().getCanonicalHostName());
-                socketClientHandler = new SocketClientHandler(socket);
+                    socketClientHandler = new SocketClientHandler(socket);
 
-                socketClientHandler.setCallback(messageCallback);
-                Thread thread = new Thread(socketClientHandler);
-                thread.start();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    socketClientHandler.setCallback(messageCallback);
+                    Thread thread = new Thread(socketClientHandler);
+                    thread.start();
+                    logger.info("MessageServer:start - done");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
 
     }
 

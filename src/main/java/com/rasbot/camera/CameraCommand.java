@@ -154,7 +154,10 @@ public class CameraCommand {
         commandBuilder.append("port=").append(port).append(" ");
         commandBuilder.append("&");
 
-        return commandBuilder.toString();
+
+//        return commandBuilder.toString();
+//        return "raspivid -t 0 -h 720 -w 1080 -fps 25 -b 2000000 -o - | gst-launch-1.0 -v fdsrc fd=0 ! h264parse ! rtph264pay ! udpsink host=192.168.2.1 port=5000";
+        return "nohup raspivid -t 0 -hf -n -h 480 -w 640 -fps 15 -o - | gst-launch-1.0 --gst-debug=3 fdsrc ! udpsink host=192.168.2.1 port=8554 &";
     }
 
     private CameraCommand(){}
