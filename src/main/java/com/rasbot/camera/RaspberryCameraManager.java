@@ -69,6 +69,7 @@ public class RaspberryCameraManager implements MessageCallback, CameraManager{
         new Thread(() -> {
             CameraSettings cameraSettings = CameraUtils.readCameraSettings(gson);
 
+
             CameraCommand.Builder builder;
             if (cameraSettings != null){
                 builder = getCommandBuilder(cameraSettings);

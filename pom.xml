@@ -5,16 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.rasbot</groupId>
-    <artifactId>1</artifactId>
+    <artifactId>rasbot</artifactId>
     <version>1.1</version>
     <packaging>jar</packaging>
 
-    <properties>
-        <pi.deployPath>/home/pi/RasbotIIDEA/</pi.deployPath>
-        <pi.host>192.168.1.35</pi.host>
-        <pi.user>pi</pi.user>
-        <pi.password>raspberry</pi.password>
-    </properties>
 
     <dependencies>
 
@@ -73,7 +67,6 @@
         </dependency>
 
     </dependencies>
-
 
 
 </project>
